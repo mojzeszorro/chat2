@@ -192,7 +192,7 @@ $jumbo-failure-border: rgba(255,0,0,1);
 
 
     #chat #message {
-        width: 450px;
+        width: 500px;
         height: 30px;
         border: none;
         margin-bottom: 20px;
@@ -203,23 +203,42 @@ $jumbo-failure-border: rgba(255,0,0,1);
         
         
         
-       bottom:0;
+       bottom:20px;
        position:absolute;
        left:50%;
        right:50%;
        margin-left:-250px;
+       padding-left:10px;
    
        }
 
     #chat button {
         height:30px;
-        width:40px;
+        width:80px;
         border-radius:5px;
+        margin-top:5px;
+        position:absolute;
+        left:50%;
+        right:50%;
+        margin-left:-40px;
+        bottom:2px;
         
-        &:focus {
-            outline: none;
+        
+        border:solid 1px #fff;
+        outline:none;
+        color: #fff;
+        background:none;
+        transition:0.5s;
+        &:hover{
+            border-color: #fff;
+            color: #4096ee;
+            
         }
+          
     }
+    .slide:hover {
+  box-shadow: inset 6.5em 0 0 0 adjust-hue($color:#fff, $degrees:45deg);
+}
 
    
 
@@ -234,14 +253,13 @@ body {
 .chat-fixed-top {
     position: absolute;
     top: 0;
-    background: linear-gradient(to bottom, rgba(194, 194, 198,0.7), rgba(162,162,167,0.9));
     width: 100%;
     left: 0;
     right: 0;
     border-radius: 10px 10px 0 0;
-    border-bottom: 1px solid rgb(142,142,147);
+    border-bottom: 1px solid white;
     text-align: center;
-    color:rgba(255,255,255,0.9)
+    color:white;
 }
 #overlay{
     position:fixed;
@@ -262,7 +280,7 @@ body {
     left: 50%;
     font-size: 50px;
     color: white;
-    color: white;
+    
     transform: translate(-50%,50%);
 
     .flashit {
@@ -272,8 +290,8 @@ body {
         font-size: 50px;
         color: white;
         transform: translate(-50%,50%);
-        -webkit-animation: flash linear 2s;
-        animation: flash linear 2s;
+        -webkit-animation: flash linear 3s;
+        animation: flash linear 3s;
     }
 
     
@@ -302,5 +320,55 @@ body {
 
     100% {
         opacity: 0;
+    }
+}
+.chat-msg{
+    border: 2px solid #7abcff;
+    background-color:white;
+    border-radius: 5px;
+    padding:10px;
+    margin:10px 0;
+    &::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+    .time{
+        float:right;
+        color:#aaa;
+    }
+}
+.msg-other{
+    border-color: #4096ee;
+    .time{
+        float:left;
+        color:#aaa;
+    }
+    
+}
+#username{
+    
+    input{
+        display:block;
+        outline:none;
+        border-radius: 5px;
+    }
+    button{
+        margin-top:5px;
+        display:block;
+        margin-left:auto;
+        margin-right:auto;
+        border-radius:5px;
+        border: solid 1px #fff;
+        outline:none;
+        color:#fff;
+        background:none;
+        transition:0.5s;
+        &:hover{
+            border-color:#fff;
+            color:#fff;
+            background:#4096ee;
+            cursor:pointer;
+        }
     }
 }

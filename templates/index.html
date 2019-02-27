@@ -12,7 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <!--<div id="overlay"><div id="overlay-text"><h1 class="flashit"></h1></div></div>-->
+    <div id="overlay">
+        <div id="overlay-text">
+            <form id="username">
+                <input id="username_input" type="text" placeholder="Username">
+        <button type="button" id="user">Add user</button>
+</form>
+</div>
+</div>
     <div id="channel-list">
         <button id="expand" data-name="show" value="Expand">Channel list</button> <p>Active channel:</p>
     </div>
@@ -23,7 +30,7 @@
             <div class="content-container col-md-12">
                 <div class="row">
                     <div id="chat-field" class="col-md-11">
-                        <ul id="messages"></ul>
+                        <div id="messages"></div>
                     </div>
 
 
@@ -34,7 +41,7 @@
                     <form id="messenger">
 
                         <input id="message" type="text" placeholder="Enter your message">
-                        <button type="button" id="send">Send</button>
+                        <button type="button" class="slide" id="send">Send</button>
 
 
 

@@ -8,6 +8,9 @@ app=Flask(__name__)
 app.config["SECRET_KEY"] = "VERYNOTSECRETKEY"
 socketio = SocketIO(app)
 my_messages=[]
+channels =[]
+users = []
+users_online=[]
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -19,6 +22,14 @@ def sendMessage(json):
   my_messages.append(msg_data)
   print("message sent")
   emit("message", msg_data, broadcast=True)
-
+@socketio.on("status")
+def login(name):
+  for name in users:
+    if name in users:
+      status=0
+    else:
+      status=1
+    
+    emit("status", status, broadcast=True)
 if __name__ == '__main__':
   socketio.run(app)

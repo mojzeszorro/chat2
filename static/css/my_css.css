@@ -9671,7 +9671,7 @@ h3 {
 }
 
 #chat #message {
-  width: 450px;
+  width: 500px;
   height: 30px;
   border: none;
   margin-bottom: 20px;
@@ -9679,20 +9679,37 @@ h3 {
   font-family: "Raleway", sans-serif;
   font-size: 14px;
   letter-spacing: 0.2em;
-  bottom: 0;
+  bottom: 20px;
   position: absolute;
   left: 50%;
   right: 50%;
   margin-left: -250px;
+  padding-left: 10px;
 }
 
 #chat button {
   height: 30px;
-  width: 40px;
+  width: 80px;
   border-radius: 5px;
-}
-#chat button:focus {
+  margin-top: 5px;
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  margin-left: -40px;
+  bottom: 2px;
+  border: solid 1px #fff;
   outline: none;
+  color: #fff;
+  background: none;
+  transition: 0.5s;
+}
+#chat button:hover {
+  border-color: #fff;
+  color: #4096ee;
+}
+
+.slide:hover {
+  box-shadow: inset 6.5em 0 0 0 white;
 }
 
 body {
@@ -9710,14 +9727,13 @@ body {
 .chat-fixed-top {
   position: absolute;
   top: 0;
-  background: linear-gradient(to bottom, rgba(194, 194, 198, 0.7), rgba(162, 162, 167, 0.9));
   width: 100%;
   left: 0;
   right: 0;
   border-radius: 10px 10px 0 0;
-  border-bottom: 1px solid #8e8e93;
+  border-bottom: 1px solid white;
   text-align: center;
-  color: rgba(255, 255, 255, 0.9);
+  color: white;
 }
 
 #overlay {
@@ -9740,7 +9756,6 @@ body {
   left: 50%;
   font-size: 50px;
   color: white;
-  color: white;
   transform: translate(-50%, 50%);
 }
 #overlay-text .flashit {
@@ -9750,8 +9765,8 @@ body {
   font-size: 50px;
   color: white;
   transform: translate(-50%, 50%);
-  -webkit-animation: flash linear 2s;
-  animation: flash linear 2s;
+  -webkit-animation: flash linear 3s;
+  animation: flash linear 3s;
 }
 
 @-webkit-keyframes flash {
@@ -9775,6 +9790,54 @@ body {
   100% {
     opacity: 0;
   }
+}
+.chat-msg {
+  border: 2px solid #7abcff;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+.chat-msg::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.chat-msg .time {
+  float: right;
+  color: #aaa;
+}
+
+.msg-other {
+  border-color: #4096ee;
+}
+.msg-other .time {
+  float: left;
+  color: #aaa;
+}
+
+#username input {
+  display: block;
+  outline: none;
+  border-radius: 5px;
+}
+#username button {
+  margin-top: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+  border: solid 1px #fff;
+  outline: none;
+  color: #fff;
+  background: none;
+  transition: 0.5s;
+}
+#username button:hover {
+  border-color: #fff;
+  color: #fff;
+  background: #4096ee;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=my_css.css.map */

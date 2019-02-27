@@ -1,23 +1,37 @@
-function hello() {
-    document.getElementById("overlay").style.display = "block";
-    document.querySelector(".flashit").innerHTML = "Hello";
-};
-function hello2() {
-    document.querySelector(".flashit").innerHTML = "Welcome to Chatter";
-};
-function hello3() {
-    document.querySelector(".flashit").innerHTML = "Hope You would have a good time";
-    document.getElementById("overlay").style.display = "none";
-};
-function welcomescreen() {
-    hello();
-    hello2()
-    hello3()
-}
+
+$(document).ready(function(){
+    $('#overlay').delay(100).show(500);
+    var h1="Hello";
+    var h2="Welcome to Chatter";
+    var h2n1="You are not logged in";
+    var h2n2="Enter username to start";
+    var h3=document.querySelector("#username");
+    var input=document.querySelector("#username_input")
+    var user=document.querySelector("#user");
+    
+    
+    $("#overlay-text").html(h1).fadeIn(2000,function(){
+        $("#overlay-text").html(h1).fadeOut(1000,function(){
+            $("#overlay-text").html(h2).fadeIn(2000,function(){
+                $("#overlay-text").html(h2).fadeOut(1000,function(){
+                    $("#overlay-text").html(h2n1).fadeIn(2000,function(){
+                        $("#overlay-text").html(h2n1).fadeOut(1000,function(){
+                            $("#overlay-text").html(h2n2).fadeIn(2000,function(){
+                                $("#overlay-text").html(h2n2).fadeOut(1000,function(){
+                                    $("#overlay-text").html(h3).fadeIn(2500);
+        });
+    });
+});
+}); 
+    
+});
+            });
+        });
+    });
+});
 
 document.addEventListener('DOMContentLoaded', function () {
-    
-    
+   
     
     var channel_list = document.querySelector("#channel-list");
     var button = document.querySelector("#expand");
@@ -63,6 +77,7 @@ $(function() {
 document.addEventListener('DOMContentLoaded', function () {
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
     var my_storage = window.localStorage;
+    var input=document.querySelector("#username_input");
     socket.on('connect', () => {
 
         document.querySelector('#send').onclick = function () {
@@ -75,17 +90,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
         socket.on('message', data => {
             console.log('Received');
-            const li = document.createElement('li');
+            const li = document.createElement('div');
+            li.className="chat-msg"
             li.innerHTML = `${data.msg}`;
             document.querySelector("#messages").append(li);
         });
+        document.querySelector("#user").onclick=function(){
+            user = document.querySelector("#user").value;
+            socket.emit('status', user);
+           
+        };
+        socket.on('status', data =>{
+            console.log('Status send');
+            input.innerHTML=`${data.status}`;
+
+        }
     });
 });
 $(document).ready(function () {
     $(window).keydown(function (event) {
         if (event.keyCode == 13) {
             event.preventDefault();
+            if ($("#overlay").css("display")=="block"){
+                $("#user").click();    
+            }
+            else{
+           
+            $("#send").click();
             return false;
-        }
+        }};
     });
 });
