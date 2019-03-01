@@ -1,5 +1,7 @@
 
 $(document).ready(function(){
+    var user = localStorage.getItem("username");
+    if (!user){
     $('#overlay').delay(100).show(500);
     var h1="Hello";
     var h2="Welcome to Chatter";
@@ -7,7 +9,7 @@ $(document).ready(function(){
     var h2n2="Enter username to start";
     var h3=document.querySelector("#username");
     var input=document.querySelector("#username_input")
-    var user=document.querySelector("#user");
+     
     
     
     $("#overlay-text").html(h1).fadeIn(2000,function(){
@@ -28,10 +30,14 @@ $(document).ready(function(){
             });
         });
     });
+    }
+    else{
+        document.querySelector("#chat-title").innerHTML="Chatter - "+user;
+    };
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-   
+
     
     var channel_list = document.querySelector("#channel-list");
     var button = document.querySelector("#expand");
@@ -82,29 +88,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.querySelector('#send').onclick = function () {
             msg = document.querySelector("#message").value;
-            socket.emit('message', { 'msg': msg});
+            user = my_storage.getItem('username');
+            socket.emit('message', { 'msg': msg, 'user':user});
             document.querySelector("#message").value = '';
 
         };
+        
+        document.querySelector('#user_button').onclick = function() {
+            let user_name = document.querySelector('#username_input').value;
+            if (user_name === ''){
+                alert("Name cannot be empty !");
+            }
+            else {
+                my_storage.setItem('username',document.querySelector("#username_input").value);
+                socket.emit('username',my_storage.getItem('username'));
+                document.querySelector("#chat-title").innerHTML="Chatter - "+my_storage.getItem('username');
+                $('#overlay').delay(100).hide(500);
+                
+                
+                
 
+            }
+        };
 
         socket.on('message', data => {
             console.log('Received');
             const li = document.createElement('div');
-            li.className="chat-msg"
-            li.innerHTML = `${data.msg}`;
+            if (`${data.user}`=== my_storage.getItem('username')){
+            li.className="chat-msg";}
+            else{
+                li.className="msg-other";
+            } ; 
             document.querySelector("#messages").append(li);
+            li.innerHTML = `<strong class="name">${data.user} </strong> <p>${data.msg}</p> <span class = 'time'>(${data.my_time})</span>`;
+            
         });
-        document.querySelector("#user").onclick=function(){
-            user = document.querySelector("#user").value;
-            socket.emit('status', user);
-           
+        
+        socket.on('my response'),function(user){
+            console.log(user);
+            document.querySelector("#chat-title").innerHTML= `<b>user.user_name</b> - Chatter`;
         };
-        socket.on('status', data =>{
-            console.log('Status send');
-            input.innerHTML=`${data.status}`;
-
-        }
     });
 });
 $(document).ready(function () {
@@ -112,7 +135,7 @@ $(document).ready(function () {
         if (event.keyCode == 13) {
             event.preventDefault();
             if ($("#overlay").css("display")=="block"){
-                $("#user").click();    
+                $("#user_button").click();    
             }
             else{
            

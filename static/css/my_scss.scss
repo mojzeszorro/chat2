@@ -63,6 +63,17 @@ $jumbo-failure-border: rgba(255,0,0,1);
     padding-bottom:2px;
     padding-left:10px;
     margin-bottom:2px;
+    &::-webkit-scrollbar{
+        width:10px;
+        
+    }
+    &::-webkit-scrollbar-thumb{
+        
+        background-color:  #7abcff;
+    &:hover{
+        background-color:#60abf8;
+    }
+    }
     
     
 }
@@ -89,6 +100,7 @@ $jumbo-failure-border: rgba(255,0,0,1);
     background: -webkit-linear-gradient(top, #7abcff 0%, #60abf8 44%, #4096ee 76%);
     background: linear-gradient(to bottom, #7abcff 0%, #60abf8 44%, #4096ee 76%);
     border-radius: 0 0 10px 10px;
+    
 
     button {
         width: 100px;
@@ -112,6 +124,10 @@ $jumbo-failure-border: rgba(255,0,0,1);
             color: rgba(255, 255, 255, 0.8);
             outline: none;
         }
+    }
+    p{
+        position:absolute;
+        bottom:0;
     }
 }
 #about {
@@ -333,16 +349,31 @@ body {
         clear:both;
         display:table;
     }
+    
     .time{
         float:right;
         color:#aaa;
+        font-size: 50%;
+    font-weight: 400;
     }
 }
 .msg-other{
-    border-color: #4096ee;
+    
+    border: 2px solid #1386fa;
+    background-color:white;
+    border-radius: 5px;
+    padding:10px;
+    margin:10px 0;
+    &::after{
+        content:"";
+        clear:both;
+        display:table;}
+        
     .time{
         float:left;
         color:#aaa;
+        font-size: 50%;
+    font-weight: 400;
     }
     
 }
