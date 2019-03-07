@@ -51,7 +51,7 @@ $jumbo-failure-border: rgba(255,0,0,1);
 #chat-field{
     
     
-    height:550px!important;
+    height:500px!important;
     
     margin-left:auto;
     margin-right:auto;
@@ -62,7 +62,7 @@ $jumbo-failure-border: rgba(255,0,0,1);
     overflow-x:hidden;
     padding-bottom:2px;
     padding-left:10px;
-    margin-bottom:2px;
+    margin-bottom:10px;
     &::-webkit-scrollbar{
         width:10px;
         
@@ -100,9 +100,23 @@ $jumbo-failure-border: rgba(255,0,0,1);
     background: -webkit-linear-gradient(top, #7abcff 0%, #60abf8 44%, #4096ee 76%);
     background: linear-gradient(to bottom, #7abcff 0%, #60abf8 44%, #4096ee 76%);
     border-radius: 0 0 10px 10px;
-    
+    ul{
+        position:absolute;
+        top:60px;
+        left:15px;
+        width:180px;
+        display:table;
+    li{
+        display:table-row;
+        text-align:center;
+        cursor:pointer;
+        &:hover{
+            background:rgba(255,255,255,0.1);
+        }
+    }
+    }
 
-    button {
+    #expand {
         width: 100px;
         height: 20px;
         font-size: 12px;
@@ -129,7 +143,50 @@ $jumbo-failure-border: rgba(255,0,0,1);
         position:absolute;
         bottom:0;
     }
-}
+    #channel-creation{
+       
+        position:absolute;
+        top:60px;
+        right:15px;
+        display:grid;
+        
+        
+        input{
+            width:160px;
+            border-radius: 5px;
+            opacity: 0.5;
+        transition: opacity 0.3s;
+        &::-webkit-input-placeholder{
+            text-align:center;
+        }
+        
+
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &:focus {
+            outline: none;
+        }
+        }
+        button{
+        height:30px;
+        width:160px;
+        border-radius:5px;
+        margin-top:5px;  
+        border:solid 1px #fff;
+        outline:none;
+        color: #fff;
+        background:none;
+        transition:1s;
+        &:hover{
+            border-color: #fff;
+            background: white;
+            color:#4096ee
+            
+        }}
+        }}
 #about {
     width: 450px;
     height: 20px;
@@ -177,12 +234,10 @@ $jumbo-failure-border: rgba(255,0,0,1);
         height: 30px;
         margin-bottom: 20px;
         align-content: flex-end;
-        
         border: none;
-        
         opacity: 0.5;
         transition: opacity 0.3s;
-        bottom:0;
+        bottom:20px;
 
 
         &:hover {
@@ -291,7 +346,7 @@ body {
     cursor:pointer;
 }
 #overlay-text {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     font-size: 50px;

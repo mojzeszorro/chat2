@@ -85,11 +85,15 @@ document.addEventListener('DOMContentLoaded', function () {
     var my_storage = window.localStorage;
     var input=document.querySelector("#username_input");
     socket.on('connect', () => {
+        if(my_storage.getItem('channel')){
+            socket.emit("join_channel", my_storage.getItem("channel"));
+        };
 
         document.querySelector('#send').onclick = function () {
             msg = document.querySelector("#message").value;
             user = my_storage.getItem('username');
-            socket.emit('message', { 'msg': msg, 'user':user});
+            const channel = my_storage.getItem('channel');
+            socket.emit('message', { 'msg': msg, 'user':user, 'channel':channel});
             document.querySelector("#message").value = '';
 
         };
@@ -103,13 +107,39 @@ document.addEventListener('DOMContentLoaded', function () {
                 my_storage.setItem('username',document.querySelector("#username_input").value);
                 socket.emit('username',my_storage.getItem('username'));
                 document.querySelector("#chat-title").innerHTML="Chatter - "+my_storage.getItem('username');
-                $('#overlay').delay(100).hide(500);
-                
-                
-                
-
+                $('#overlay').delay(100).hide(500);                                                
             }
         };
+        document.querySelector("#channel_button").onclick = function(){
+            const channel = document.querySelector("#channel_input").value;
+            socket.emit("channel_creation", channel);
+            document.querySelector("#chat-title").innerHTML="Chatter - "+my_storage.getItem('username')+ " - " + channel;
+            
+            var name = document.createElement('li');
+            
+            name.append('#channel-changer')
+            name.innerHTML = channel;
+            name.dataset.channel=channel;
+            name.className="my-channel";
+            
+            
+        }
+        document.querySelectorAll(".my-channel").forEach(li => {
+            li.onclick = () =>{
+                socket.emit('change_channel', my_storage.getItem('channel'), li.dataset.channel);
+                var channel_list = document.querySelector("#channel-list");
+                var button = document.querySelector("#expand");
+                channel_list.style.height="20px";
+                button.value = "Expand";
+                button.innerHTML = "Channels";
+                
+            }
+        })
+
+        socket.on('error', msg => {
+            // Notify the user about the error
+            alert(msg);
+        });
 
         socket.on('message', data => {
             console.log('Received');
@@ -119,15 +149,32 @@ document.addEventListener('DOMContentLoaded', function () {
             else{
                 li.className="msg-other";
             } ; 
-            document.querySelector("#messages").append(li);
-            li.innerHTML = `<strong class="name">${data.user} </strong> <p>${data.msg}</p> <span class = 'time'>(${data.my_time})</span>`;
             
+            li.innerHTML = `<strong class="name">${data.user} </strong> <p>${data.msg}</p> <span class = 'time'>(${data.my_time})</span>`;
+            document.querySelector("#messages").append(li);
         });
         
         socket.on('my response'),function(user){
             console.log(user);
             document.querySelector("#chat-title").innerHTML= `<b>user.user_name</b> - Chatter`;
         };
+        socket.on('join_channel', data => {
+            my_storage.setItem('channel', data['channel']);
+            document.querySelector('#messages').innerHTML='';
+            document.querySelector("#chat-title").innerHTML="Chatter - "+my_storage.getItem('username') + my_storage.getItem('channel');
+            var msg;
+            for (msg in data["messages"]) {
+                const li = document.createElement('div');
+            if (`${data.user}`=== my_storage.getItem('username')){
+            li.className="chat-msg";}
+            else{
+                li.className="msg-other";
+            } ; 
+            
+            li.innerHTML = `<strong class="name">${data["messages"][msg].user} </strong> <p>${data["messages"][msg].msg}</p> <span class = 'time'>(${data["messages"][msg].my_time})</span>`;
+            document.querySelector("#messages").append(li);
+            };
+        })
     });
 });
 $(document).ready(function () {
