@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
     <script src="{{url_for('static',filename='js/script.js')}}"></script>
+    <script src="{{url_for('static', filename='js/socketio-file-upload/client.js')}}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -66,7 +67,8 @@
 
     </div>
     <div id="about">
-        <button id="about-button" value="Expand">About</button><br />Find me on: ............<span id="logos">sfasf </span>
+        <button id="about-button" value="Expand">About</button><br />
+        <span id="logos"><div id="file_drop">Drop Files Here</div> </span>
     </div>
 
 

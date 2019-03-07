@@ -32,7 +32,7 @@ $(document).ready(function(){
     });
     }
     else{
-        document.querySelector("#chat-title").innerHTML="Chatter - "+user;
+        document.querySelector("#chat-title").innerHTML=`<b id="user_b">Chatter</b> <span id="title">User: ${my_storage.getItem('username')}</span> `;
     };
 });
 
@@ -106,18 +106,18 @@ document.addEventListener('DOMContentLoaded', function () {
             else {
                 my_storage.setItem('username',document.querySelector("#username_input").value);
                 socket.emit('username',my_storage.getItem('username'));
-                document.querySelector("#chat-title").innerHTML="Chatter - "+my_storage.getItem('username');
+                document.querySelector("#chat-title").innerHTML=`<b id="user_b">Chatter</b> <span id="title">User: ${my_storage.getItem('username')}</span> `;
                 $('#overlay').delay(100).hide(500);                                                
             }
         };
         document.querySelector("#channel_button").onclick = function(){
             const channel = document.querySelector("#channel_input").value;
             socket.emit("channel_creation", channel);
-            document.querySelector("#chat-title").innerHTML="Chatter - "+my_storage.getItem('username')+ " - " + channel;
+            document.querySelector("#chat-title").innerHTML=`<b id="user_b">Chatter</b> <span id="title">User: ${my_storage.getItem('username')}</span> <span id="channel-panel">Active channel: <span id = "channel">${my_storage.getItem('channel')}</span></span>`;
             
             var name = document.createElement('li');
-            
-            name.append('#channel-changer')
+            var location = document.querySelector('#channel-changer');
+            location.append(name);
             name.innerHTML = channel;
             name.dataset.channel=channel;
             name.className="my-channel";
@@ -127,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll(".my-channel").forEach(li => {
             li.onclick = () =>{
                 socket.emit('change_channel', my_storage.getItem('channel'), li.dataset.channel);
+                
                 var channel_list = document.querySelector("#channel-list");
                 var button = document.querySelector("#expand");
                 channel_list.style.height="20px";
@@ -161,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
         socket.on('join_channel', data => {
             my_storage.setItem('channel', data['channel']);
             document.querySelector('#messages').innerHTML='';
-            document.querySelector("#chat-title").innerHTML="Chatter - "+my_storage.getItem('username') + my_storage.getItem('channel');
+            document.querySelector("#chat-title").innerHTML=`<b id="user_b">Chatter</b> <span id="title">User: ${my_storage.getItem('username')}</span> <span id="channel-panel">Active channel: <span id = "channel">${my_storage.getItem('channel')}</span></span>`;
             var msg;
             for (msg in data["messages"]) {
                 const li = document.createElement('div');
@@ -175,6 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector("#messages").append(li);
             };
         })
+        
     });
 });
 $(document).ready(function () {

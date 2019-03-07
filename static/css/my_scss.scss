@@ -113,6 +113,9 @@ $jumbo-failure-border: rgba(255,0,0,1);
         &:hover{
             background:rgba(255,255,255,0.1);
         }
+        &:active{
+            background:rgba(255,255,255,0.2);
+        }
     }
     }
 
@@ -331,6 +334,25 @@ body {
     border-bottom: 1px solid white;
     text-align: center;
     color:white;
+    b{
+        float:left;
+        margin-left:10px;
+    }
+    #channel-panel{
+        float:right;
+        margin-right:10px;
+    }
+    #channel{
+        
+        animation-name:blink;
+        animation-duration:3s;
+        animation-iteration-count: infinite;
+    }
+    @keyframes blink{
+        0% {color: rgba(0, 255, 0,1);}
+        50% {color: rgba(0, 255, 0,0.01);}
+        100% {color: rgba(0, 255, 0,1);}
+    }
 }
 #overlay{
     position:fixed;
@@ -354,45 +376,10 @@ body {
     
     transform: translate(-50%,50%);
 
-    .flashit {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        font-size: 50px;
-        color: white;
-        transform: translate(-50%,50%);
-        -webkit-animation: flash linear 3s;
-        animation: flash linear 3s;
-    }
 
     
 }
-@-webkit-keyframes flash {
-    0% {
-        opacity: 0;
-    }
 
-    50% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-@keyframes flash {
-    0% {
-        opacity: 0;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
 .chat-msg{
     border: 2px solid #7abcff;
     background-color:white;
