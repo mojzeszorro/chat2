@@ -9691,7 +9691,7 @@ h3 {
   background: linear-gradient(to bottom, #7abcff 0%, #60abf8 44%, #4096ee 76%);
   border-radius: 10px 10px 0 0;
 }
-#about button {
+#about #about-button {
   width: 100px;
   height: 20px;
   font-size: 12px;
@@ -9707,9 +9707,12 @@ h3 {
   border: none;
   outline: none;
 }
-#about button:hover {
+#about #about-button:hover {
   color: rgba(255, 255, 255, 0.8);
   outline: none;
+}
+#about #about-button #up {
+  float: right;
 }
 
 #chat input {

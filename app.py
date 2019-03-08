@@ -1,19 +1,31 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
 import time, json
 import requests, os
 from flask_socketio import SocketIO, emit, send, join_room, leave_room 
 from flask_session import Session
+from werkzeug.utils import secure_filename
+from flask_dropzone import Dropzone
 
 app=Flask(__name__)
 app.config["SECRET_KEY"] = "VERYNOTSECRETKEY"
+basedir = os.path.abspath(os.path.dirname(__file__))
+UPLOAD_FOLDER = '/static/up'
+ALLOWED_EXTENSIONS = set(['txt','pdf','png','jpg','jpeg','gif'])
+app.config['UPLOAD_FOLDER'] = os.path.join(basedir,'up')
 socketio = SocketIO(app)
+dropzone=Dropzone(app)
 my_messages={}
 channels =[]
 users = {}
 
-@app.route("/")
-def index():
-    return render_template("index.html", channels=channels)
+
+@app.route("/", methods=['GET','POST'])
+
+def upload():
+  if request.method=='POST':
+    f=request.files.get('file')
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
+  return render_template("index.html", channels=channels)
 @socketio.on("message")
 def sendMessage(json):
    #timestamp
@@ -22,6 +34,8 @@ def sendMessage(json):
   my_messages[json["channel"]].append(msg_data)
   print("message sent")
   emit("message", msg_data, room=json["channel"], broadcast=True)
+
+
 @socketio.on("username")
 def login(username):
   users[username] = request.sid

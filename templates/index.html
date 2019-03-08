@@ -11,6 +11,7 @@
     <script src="{{url_for('static',filename='js/script.js')}}"></script>
     <script src="{{url_for('static', filename='js/socketio-file-upload/client.js')}}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{dropzone.load_css()}}
 </head>
 <body>
     <div id="overlay">
@@ -68,7 +69,7 @@
     </div>
     <div id="about">
         <button id="about-button" value="Expand">About</button><br />
-        <span id="logos"><div id="file_drop">Drop Files Here</div> </span>
+        <span id="logos"> {{dropzone.create(action='upload')}} {{dropzone.load_js()}} {{dropzone.config}} </span>
     </div>
 
 

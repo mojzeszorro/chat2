@@ -1,6 +1,7 @@
 
 $(document).ready(function(){
     var user = localStorage.getItem("username");
+    var my_storage = window.localStorage;
     if (!user){
     $('#overlay').delay(100).show(500);
     var h1="Hello";
