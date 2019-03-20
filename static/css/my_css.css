@@ -9677,8 +9677,6 @@ h3 {
   height: 20px;
   color: inherit;
   font-family: inherit;
-  overflow-y: hidden;
-  z-index: 1;
   transition: 0.5s;
   position: fixed;
   bottom: 0;
@@ -9700,7 +9698,7 @@ h3 {
   left: 50%;
   right: 50%;
   margin-left: -50px;
-  bottom: 0;
+  top: 0;
   transition-duration: 1s;
   background-color: transparent;
   color: rgba(255, 255, 255, 0.5);
@@ -9711,8 +9709,15 @@ h3 {
   color: rgba(255, 255, 255, 0.8);
   outline: none;
 }
-#about #about-button #up {
-  float: right;
+#about #icons {
+  margin-left: 15px;
+}
+#about #icons img {
+  height: 50px;
+  margin: 5px 2px 5px 2px;
+}
+#about #icons img:hover {
+  cursor: grab;
 }
 
 #chat input {
@@ -9914,6 +9919,10 @@ body {
   color: #fff;
   background: #4096ee;
   cursor: pointer;
+}
+
+.file-upload {
+  height: 150px;
 }
 
 /*# sourceMappingURL=my_css.css.map */

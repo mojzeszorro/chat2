@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var channel_list = document.querySelector("#channel-list");
     var button = document.querySelector("#expand");
     var about = document.querySelector("#about");
+    
     var aboutButton = document.querySelector("#about-button");
     button.onclick = function () {
         if (button.value === "Expand") {
@@ -60,15 +61,19 @@ document.addEventListener('DOMContentLoaded', function () {
     aboutButton.onclick = function () {
         if (aboutButton.value === "Expand") {
             about.style.height = "120px";
+            about.style.overflowY="scroll";
             aboutButton.value = "Collapse";
             aboutButton.innerHTML = "Hide";
+            
         } else {
             about.style.height = "20px";
+            about.style.overflowY="hidden";
             aboutButton.value = "Expand";
             aboutButton.innerHTML = "About";
         }
     };
 });
+
 $(function() {
     $('form').each(function() {
         $(this).find('input').keypress(function(e) {
@@ -98,7 +103,11 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector("#message").value = '';
 
         };
-        
+        document.querySelectorAll('.emoticon').forEach(img => {
+            img.onclick = () =>{
+                
+            };
+        });
         document.querySelector('#user_button').onclick = function() {
             let user_name = document.querySelector('#username_input').value;
             if (user_name === ''){
@@ -125,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
             
             
         }
+       
         document.querySelectorAll(".my-channel").forEach(li => {
             li.onclick = () =>{
                 socket.emit('change_channel', my_storage.getItem('channel'), li.dataset.channel);
@@ -154,6 +164,19 @@ document.addEventListener('DOMContentLoaded', function () {
             
             li.innerHTML = `<strong class="name">${data.user} </strong> <p>${data.msg}</p> <span class = 'time'>(${data.my_time})</span>`;
             document.querySelector("#messages").append(li);
+        });
+        socket.on('file', data => {
+            
+            const div = document.createElement('div');
+            if (`${data.user}`=== my_storage.getItem('username')){
+                div.className="chat-msg";}
+            else{
+                div.className="msg-other";
+                } ;
+            file.innerHTML = `<strong class="name">${data.user} </strong> <p>${data.file}</p> <span class = 'time'>(${data.my_time})</span>`;
+            document.querySelector("#messages").append(div);
+            console.log('File received');
+            
         });
         
         socket.on('my response'),function(user){

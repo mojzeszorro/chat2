@@ -4,28 +4,31 @@ import requests, os
 from flask_socketio import SocketIO, emit, send, join_room, leave_room 
 from flask_session import Session
 from werkzeug.utils import secure_filename
-from flask_dropzone import Dropzone
+
 
 app=Flask(__name__)
 app.config["SECRET_KEY"] = "VERYNOTSECRETKEY"
 basedir = os.path.abspath(os.path.dirname(__file__))
-UPLOAD_FOLDER = '/static/up'
+UPLOAD_FOLDER='/up'
 ALLOWED_EXTENSIONS = set(['txt','pdf','png','jpg','jpeg','gif'])
-app.config['UPLOAD_FOLDER'] = os.path.join(basedir,'up')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
 socketio = SocketIO(app)
-dropzone=Dropzone(app)
 my_messages={}
 channels =[]
 users = {}
-
+emoticons_list=[]
+for root,dirs,files in os.walk(r'static/emoticons'):
+  for file in files:
+    emoticons_list.append('emoticons/'+file)
+print(emoticons_list)
+path='static/emoticons'
 
 @app.route("/", methods=['GET','POST'])
+def index():
+  return render_template("index.html", channels=channels, emoticons=emoticons_list,path=path) 
 
-def upload():
-  if request.method=='POST':
-    f=request.files.get('file')
-    f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
-  return render_template("index.html", channels=channels)
 @socketio.on("message")
 def sendMessage(json):
    #timestamp
